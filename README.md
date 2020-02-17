@@ -382,9 +382,9 @@ In this section, we'll introduce some of the more complex functions/operators of
 
 Monads are one of the most important concepts in Haskell. Monads going to seem complicated, but they're actually pretty simple. Just stick with me for a little bit, and it'll all make sense in the end.
 
-At the very beginning of this tutorial, we discussed the difference between an **imperative** language (C++/Java/Python) and a **functional** language (Haskell). The difference we decided upon was that an *imperative* langauge provides the computer with a sequence of steps to execute line-by-line, while a *functional* language simply tells the computer what *is*.
+At the very beginning of this tutorial, we discussed the difference between an **imperative** language (C++/Java/Python) and a **functional** language (Haskell). The difference we decided on was that an *imperative* langauge provides the computer with a sequence of steps to execute line-by-line, while a *functional* language simply tells the computer what *is*.
 
-But doesn't this give us some pretty harsh limitations? For example, we can't do something like this Python code:
+But doesn't this give us some pretty harsh limitations? For example, we can't do something like this Python code, which removes the odd numbers from a list:
 
 ```
 x = [1, 2, 3, 4, 5, 6]
