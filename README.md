@@ -41,7 +41,7 @@ b = 5;
 ```
 In an *imperative* language, code is executed line-by-line. ```c``` will evaluate to 5, because that's what ```a``` and ```b``` were when ```c``` was defined. Changing ```a``` and ```b``` at a later point doesn't change what ```c``` is (unless you're using pointers).
 
-In a *functional* language, ```c``` *is* ```a + b```. When we go to evaluate what ```c```, it will always evaluate to ```a + b```. If we call ```c``` before ```a``` and ```b``` change, it will evaluate to 5. If we call it after they change, it will evaluate to 9.
+In a *functional* language, this wouldn't make any sense. We can't say ```a = 4``` because we just said a *is* 2. If I told you my favorite color is blue, it *is* blue. I won't tell you later in our conversation that my favorite color is green, because I already told you it *is* blue.
 
 In an imperative language, it sometimes makes sense to define a variable, use it in some way, and then reassign it with a different value:
 
@@ -51,7 +51,7 @@ counter = 0;
 counter = 1;
 ```
 
-Statments like these have no place in functional programming. We can't do ```counter = 1``` because we've already declared that counter *is* 0. And, as you might be able to figure out, the above example with redefining ```a``` and ```b``` would have no place either. Once something is defined, it is what it is. It doesn't change.
+Statments like these have no place in functional programming. We can't do ```counter = 1``` because we've already declared that counter *is* 0. Once something is defined, it is what it is. It doesn't change.
 
 You can think of Haskell as just a way of executing a series of transformations on whatever your input is. We aren't defining steps for our program, we're defining these things that can be used.
 
