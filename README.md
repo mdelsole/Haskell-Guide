@@ -9,9 +9,7 @@ A friendly guide to the Haskell programming language. Written by me!
    * [Learning the Basics](#Learning-the-Basics)
    * [Making Our First Function](#Making-Our-First-Function)
    * [More Features of Functions](#More-Features-of-Functions)
-   * [Advanced Haskell Concepts](#Advanced-Haskell-Concepts)
-      * [Monads](#Monads)
-      * [Constructors](#Constructors)
+   * [Monads](#Monads)
 <!--te-->
 
 # What is Haskell?
@@ -66,6 +64,9 @@ a = 4 + 5
 ```
 
 Haskell can figure out that ```a``` is a number. It's a powerful language that allows for short, clean, and concise code.
+
+## Why do we want to learn Haskell?
+Speed, speed, and more speed. By the end of learning it, you'll be able to quote Sonic as you watch other programming languages, saying, "You're too slow!" In fact, I'd say Haskell's only sin is that it uses spaces instead of tabs...
 
 # Learning the Basics
 
@@ -215,7 +216,7 @@ is_even x = (if x `mod` 2 == 0
             * 100
 ```
 
-White space doesn't matter in Haskell, so we can make this look nicer:
+Since we're using parentheses, the white space doesn't matter. We can make this look nicer:
 
 ```
 is_even x = (if x `mod` 2 == 0 then 1 else 0) * 100
@@ -372,15 +373,9 @@ The "generator" ```x <- [1..10]``` feeds the list of numbers 1-10 into x. Before
 
 What does that arrow mean? How do we use it in other places? That's something we'll cover in the next section. Speaking of which...
 
-# Advanced Haskell Concepts
+# Monads
 
-Now that we've covered the basics, I'm going to start picking up the pace a little for this tutorial. Simple stuff is easily google-able. More complex stuff is not. Thus, you'll get the most out of this tutorial if you see how to do complex operations, rather than me just regurgitating the wiki to you.
-
-In this section, we'll introduce some of the more complex functions/operators of Haskell and how they're used. Each subsection will build off the previous, so be sure to read them in order! It'll get mighty tricky if you don't know what's going on. By the end though, you should have a good enough grasp of Haskell to build many programs
-
-## Monads
-
-Monads are one of the most important concepts in Haskell. Monads going to seem complicated, but they're actually pretty simple. Just stick with me for a little bit, and it'll all make sense in the end.
+Monads are one of the most important concepts in Haskell. People say that monads are really complicated, but they're actually pretty simple. It's just hard to find an answer on google. You'll be hit with a wave of jargon that won't make any sense unless you already completely understand them. Just stick with me for a little bit here and I'll save you a lot of pain.
 
 At the very beginning of this tutorial, we discussed the difference between an **imperative** language (C++/Java/Python) and a **functional** language (Haskell). The difference we decided on was that an *imperative* langauge provides the computer with a sequence of steps to execute line-by-line, while a *functional* language simply tells the computer what *is*.
 
@@ -393,9 +388,9 @@ for i in range(x):
     x.remove(i)
 ```
 
-There's no modifying something after you create it. Does that mean we have to implement it all on one line then? Or what if we need some other variables first?
+There's no modifying something after you create it. Does that mean we have to implement it all on one line then? And what if we need some other variables first?
 
-Monads are Haskell's way of implementing that sort of imperative behavior. Fundamentally, a monad is just **a sequence of operations**. Let's look at that list comprehension example from the previous section:
+Monads are *Haskell's way of implementing imperative behavior*. Fundamentally, a monad is just **a sequence of operations**. Let's look at that list comprehension example from the previous section:
 
 ```
 [x | x <- [1..10], x `mod` 2 == 0]
@@ -409,13 +404,31 @@ do
   guard (x `mod` 2 == 0)
   return x
 ```
-It's really just a sequence of operations, marked by the ```do``` keyword. "But internet guy, I thought functional programming languages weren't supposed to give line-by-line instructions?" Look closer. This isn't a sequence of instructions we're giving our computer. It's a *chain of operations*. The line-by-line aspect is just the order in which these operations are performed.
+It's really just a sequence of operations, marked by the ```do``` keyword. Note that this isn't a sequence of instructions we're giving our computer. It's a *chain of operations*. The line-by-line aspect is just the order in which these operations are performed. Another, more complicated example would be:
 
-With that in mind, we can extend the idea a bit further: a monad is a strategy for combining computations into more complex computations. A monad is essentially a "type" (like integer or boolean) that supports a key operator: the ```<<=```. 
+```
+-- The monad
+main = do
+  str <- getLine
+  number <- stringToNum str
+  result <- squareRoot number
+  print result
+
+-- Functions for above (not important)
+stringToNum :: String -> IO Double
+stringToNum s = return (read s)
+squareRoot x = return (sqrt x)
+```
+
+Ignore the syntax we haven't covered yet. This piece of code **chains together** a sequence of operations. ```getLine``` retreives information from the command line. ```stringToNum``` converts that getLine from a string to a double. ```squareRoot``` squareroots the stringToNum. Finally, the square root is printed.
+
+With this **chaining** in mind, we can extend the idea a bit further: a monad is set of computations combined into to form a more complex computation. 
+
+A monad is essentially a "type" (like integer or list). Being a type, monads support your standard operations like ```==``` and ```>```. However, monads have a special, very important operator: ```<<=```. 
 
 This operator, known as the "bind" or "chain" operator, is what we use to *chain* new operations to the monad. It's like appending a character to a string; you have a sequence of characters, and then you add one to the end. With monads, we have a sequence of operations, and then we add one more to the end using ```<<=```.
 
-Here's an example:
+Using this ```<<=```, we can convert the above to special monad notation:
 
 ```
 main = getLine >>= stringToNum >>= squareRoot >>= print
@@ -425,9 +438,16 @@ main = getLine >>= stringToNum >>= squareRoot >>= print
     squareRoot x = return (sqrt x)
 ```
 
-## Constructors
+As we learn more, we'll see that these are just basic monads. There are many different types with many different functionalities. Once we get to the more advanced ones, it'll make much more sense how they emulate *imperative* language behavior. For now, just remember a monad is a **sequence of expressions chained together**.
 
-Arrows express computations that happen within a context
+So why did I devote a whole section to these guys if they're so simple? Much of what we're going to do in Haskell will build off the concept here. Most code you'll write will be some form of monad.
 
+One final note for those curious: we *could* in fact do what monads do without them. It'd just be a lot more difficult.
 
-# Program Basics
+# Making a Program 
+
+Now that we've covered the basics, I'm going to start picking up the pace a little for this tutorial. Simple syntax stuff is easily google-able. More complex stuff is not. 
+
+The best way to learn is to build something. For the second half of this tutorial, we're going to build an actual large-scale program in Haskell. 
+
+There's an old language called "Forth" that no one has ever really used. We will be building a miniature version of it in Haskell. That's right, we'll be making our own programming language! Why? It will force us to cover most fundamental aspects of Haskell. That, and I couldn't think of anything better to do.
