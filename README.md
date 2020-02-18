@@ -5,11 +5,15 @@ A friendly guide to the Haskell programming language. Written by me!
 
 
 <!--ts-->
+Part 1
    * [What is Haskell?](#What-is-Haskell)
    * [Learning the Basics](#Learning-the-Basics)
    * [Making Our First Function](#Making-Our-First-Function)
    * [More Features of Functions](#More-Features-of-Functions)
    * [Monads](#Monads)
+Part 2
+   * [Making a Full Haskell Program](#Making-a-Full-Haskell-Program)
+   
 <!--te-->
 
 # What is Haskell?
@@ -444,10 +448,23 @@ So why did I devote a whole section to these guys if they're so simple? Much of 
 
 One final note for those curious: we *could* in fact do what monads do without them. It'd just be a lot more difficult.
 
-# Making a Program 
+# Making a Full Haskell Program 
 
 Now that we've covered the basics, I'm going to start picking up the pace a little for this tutorial. Simple syntax stuff is easily google-able. More complex stuff is not. 
 
 The best way to learn is to build something. For the second half of this tutorial, we're going to build an actual large-scale program in Haskell. 
 
-There's an old language called "Forth" that no one has ever really used. We will be building a miniature version of it in Haskell. That's right, we'll be making our own programming language! Why? It will force us to cover most fundamental aspects of Haskell. That, and I couldn't think of anything better to do.
+There's an old language called "Forth" that no one has ever really used. We will be building a miniature version of it in Haskell. That's right, we'll be making our own programming language! Why? It will force us to cover most fundamental aspects of Haskell. That, and I couldn't think of anything better to do. Let's go!
+
+## Setting up
+
+Maybe you remember how to run a program in Haskell from earlier, or maybe you don't. Either way, I'll walk through it again.
+
+First, create a folder that will be where we'll store the program files. Navigate to the folder in terminal using ```cd```. 
+
+Then, boot up any text editor you want. I'll be using sublime, but it really doesn't matter. If you hate yourself, you can even use nano. We're going to want to have both the terminal and the text editor open next to each other for quick and easy compilation.
+
+In your text editor, create a new file called ```Main.hs```. Recall that ```.hs``` is the extension for haskell files.
+
+
+Then use that ```ghc filename.hs```. Then, it can be run like any other program using ```./filename```.
