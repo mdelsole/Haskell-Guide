@@ -454,7 +454,9 @@ Now that we've covered the basics, I'm going to start picking up the pace a litt
 
 The best way to learn is to build something. For the second half of this tutorial, we're going to build an actual large-scale program in Haskell. 
 
-There's an old language called "Forth" that no one has ever really used. We will be building a miniature version of it in Haskell. That's right, we'll be making our own programming language! Why? It will force us to cover most fundamental aspects of Haskell. That, and I couldn't think of anything better to do. Let's go!
+There's an old language called "Forth" that no one really uses. We will be building a miniature version of it in Haskell. That's right, we'll be making our own programming language! Why? It will force us to cover most fundamental aspects of Haskell. That, and I couldn't think of anything better to do. 
+
+I'll include the source code for this up top in the files, in case you want to see the full extent of it. That being said, let's go!
 
 ## Setting up
 
@@ -464,7 +466,60 @@ First, create a folder that will be where we'll store the program files. Navigat
 
 Then, boot up any text editor you want. I'll be using sublime, but it really doesn't matter. If you hate yourself, you can even use nano. We're going to want to have both the terminal and the text editor open next to each other for quick and easy compilation.
 
-In your text editor, create a new file called ```Main.hs```. Recall that ```.hs``` is the extension for haskell files.
+In your text editor, create a new file called ```Main.hs```. Recall that ```.hs``` is the extension for haskell files. With that, we can start actually coding.
+
+## Entry points and the main module
+
+Starting out, Haskell is going to look for an entry point. By default, the entry point Haskell will look for is named ```main``` and is of type IO (meaning it prints something).
+
+```
+main = do
+  print (8 + 9)
+```
+
+We don't *have* to name it main though. In fact, outside of this starter file, we shouldn't name it main. How do we define a different entry point? Placing this line at the top of our file: ```module MyName where```. For example:
+
+```
+module Hello where
+
+hello = do
+  print (8 + 9)
+```
+
+If you read it as if it's all one line, it should make sense. It's good practice to include this even in our primary ```Main.hs``` file, so go ahead and add ```module Main where``` to the top of your file.
+
+Likewise, we won't always want our module to be of type IO. We can define the **type** an expression is using the ```::``` operator. Again, it's good practice to specify what our ```main``` will be, so go ahead and add ```main :: IO ()```. Our program now looks like this:
+
+```
+module Main where
+
+main :: IO ()
+main = do
+  print (8 + 9)
+```
+
+If you want to compile this, you can use ```ghc Main.hs```. Then, it can be run like any other program using ```./Main``` (or clicking that .exe if you're on windows).
 
 
-Then use that ```ghc filename.hs```. Then, it can be run like any other program using ```./filename```.
+## Adding functionality to the main module
+
+Right now, our main module doesn't do anything but print the sum of those two numbers. Delete that ```print (8 + 9)``` line, and let's add some functionality to it. 
+
+The first thing we need is some way to read in Forth code. Since I don't really want to implement an interactive Forth terminal, we're just going to read in code from a file. Thus, our program should take in its arguments the file name. We can do so using the built-in ```getArgs```.
+
+We'll be using the format ```x <- action``` a lot here, which simply executes the ```action``` and binds its result to ```x```. 
+
+Our ```getArgs``` will be our action, and our x will look like this:
+
+```
+(fileName:tl) <- getArgs
+```
+Then, we'll want to actually read the contents of the file. We can do so with the same format, using the ```readFile``` function:
+
+```
+contents <- readFile fileName
+```
+
+## Incorporating other files
+
+Most programs, including the one we're building here, will be complicated enough to split across different files. 
