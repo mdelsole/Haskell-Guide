@@ -514,12 +514,35 @@ Our ```getArgs``` will be our action, and our x will look like this:
 ```
 (fileName:tl) <- getArgs
 ```
-Then, we'll want to actually read the contents of the file. We can do so with the same format, using the ```readFile``` function:
+To use getArgs, however, we'll need to ```import System.Environment```. We place our import statmenets between ```module Main where``` and ```main = do...``` like so:
+
+```
+module Main where
+
+import System.Environment
+
+main :: IO ()
+main = do
+  (fileName:tl) <- getArgs
+```
+
+Next, we'll want to actually read the contents of the file. We can do so with the same format, using the ```readFile``` function:
 
 ```
 contents <- readFile fileName
 ```
 
-## Incorporating other files
+Now that we've got the contents, we're probably going to want to do something with those contents. The best way to do this will to be to write another module that can handle the interpreting of those contents.
 
-Most programs, including the one we're building here, will be complicated enough to split across different files. 
+## Incorporating other files and the Interpret module
+
+Most programs, including the one we're building here, will be complicated enough to split across different files. Fortunately, incorporating other files is easy. 
+
+To start, make a new file called ```Interpret.hs```, placing it in the same folder as ```Main.hs```. To link this file to our ```Main.hs```, all we need to do is add an import statment: 
+
+```
+import Interpret
+```
+
+In our ```Interpret.hs```, we'll set it up similarly to how our ```Main.hs``` is set up:
+
