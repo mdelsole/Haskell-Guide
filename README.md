@@ -3,17 +3,17 @@ A friendly guide to the Haskell programming language. Written by me!
 
 # Table of Contents
 
-
+## Part 1
 <!--ts-->
-Part 1
    * [What is Haskell?](#What-is-Haskell)
    * [Learning the Basics](#Learning-the-Basics)
    * [Making Our First Function](#Making-Our-First-Function)
    * [More Features of Functions](#More-Features-of-Functions)
    * [Monads](#Monads)
-Part 2
+<!--te-->
+## Part 2
+<!--ts-->
    * [Making a Full Haskell Program](#Making-a-Full-Haskell-Program)
-   
 <!--te-->
 
 # What is Haskell?
