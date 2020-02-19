@@ -383,17 +383,6 @@ Monads are one of the most important concepts in Haskell. People say that monads
 
 At the very beginning of this tutorial, we discussed the difference between an **imperative** language (C++/Java/Python) and a **functional** language (Haskell). The difference we decided on was that an *imperative* langauge provides the computer with a sequence of steps to execute line-by-line, while a *functional* language simply tells the computer what *is*.
 
-But doesn't this give us some pretty harsh limitations? For example, we can't do something like this Python code, which removes the odd numbers from a list:
-
-```
-x = [1, 2, 3, 4, 5, 6]
-for i in range(x):
-  if x[i] % 2 != 0:
-    x.remove(i)
-```
-
-There's no modifying something after you create it. Does that mean we have to implement it all on one line then? And what if we need some other variables first?
-
 Monads are *Haskell's way of implementing imperative behavior*. Fundamentally, a monad is just **a sequence of operations**. Let's look at that list comprehension example from the previous section:
 
 ```
@@ -408,7 +397,7 @@ do
   guard (x `mod` 2 == 0)
   return x
 ```
-It's really just a sequence of operations, marked by the ```do``` keyword. Note that this isn't a sequence of instructions we're giving our computer. It's a *chain of operations*. The line-by-line aspect is just the order in which these operations are performed. Another, more complicated example would be:
+It's really just a sequence of operations, marked by the ```do``` keyword. Don't think of this as a isn't a sequence of instructions we're giving our computer. It's a *chain of operations*. The line-by-line aspect is just the order in which these operations are performed. Another, more complicated example would be:
 
 ```
 -- The monad
@@ -426,11 +415,19 @@ squareRoot x = return (sqrt x)
 
 Ignore the syntax we haven't covered yet. This piece of code **chains together** a sequence of operations. ```getLine``` retreives information from the command line. ```stringToNum``` converts that getLine from a string to a double. ```squareRoot``` squareroots the stringToNum. Finally, the square root is printed.
 
-With this **chaining** in mind, we can extend the idea a bit further: a monad is set of computations combined into to form a more complex computation. 
+Most of our code in our program will be functional code (defining what *is*). Then, we'll actually *use* our code using monads (imperative-style code). When running a program in Haskell, the compiler will look for a monad as an entry point, by default called ```main```.
 
-A monad is essentially a "type" (like integer or list). Being a type, monads support your standard operations like ```==``` and ```>```. However, monads have a special, very important operator: ```<<=```. 
+Remember that we're still in a functional langauge, so a monad *must* return something. We can define what type of "something" it returns, but it must return something. By default, the ```main``` monad will need to return IO, meaning we must print something. Hopefully, you're starting to see the parallels between a monad in Haskell and a method in C/C++/Java; monads really are just a way of doing imperative code in Haskell.
 
-This operator, known as the "bind" or "chain" operator, is what we use to *chain* new operations to the monad. It's like appending a character to a string; you have a sequence of characters, and then you add one to the end. With monads, we have a sequence of operations, and then we add one more to the end using ```<<=```.
+## The Hidden Power of Monads
+
+Great, monads are simple after all! Not so fast. The reason monads are so fundamental, and by extension why they receive such complicated explanations, is because *Monads themselves can be treated as expressions*.
+
+Keeping the idea of **chaining** in mind, we can monads a bit further: a monad is set of computations combined into to form a more complex computation. 
+
+A monad is essentially a **type** (like integer or list). Being a type, monads support your standard operations like ```==``` and ```>```. However, monads have a special very important operator: ```<<=```. 
+
+This operator, known as the "bind" or "chain" operator, is what we use to *chain* new operations to the monad. It's like appending a character to a string. With strings, you have a sequence of characters, and then you add one to the end. With monads, we have a sequence of operations, and then we add one more to the end using ```<<=```.
 
 Using this ```<<=```, we can convert the above to special monad notation:
 
@@ -442,11 +439,9 @@ main = getLine >>= stringToNum >>= squareRoot >>= print
     squareRoot x = return (sqrt x)
 ```
 
-As we learn more, we'll see that these are just basic monads. There are many different types with many different functionalities. Once we get to the more advanced ones, it'll make much more sense how they emulate *imperative* language behavior. For now, just remember a monad is a **sequence of expressions chained together**.
+In summary, a monad is Haskell's way of doing imperative code. It is how we actually *use* the functions that we've defined. A monad will be our entry point to run the code. However, monads can *also* be chained together. Underneath, a monad is just a *sequence of operations*. Chaining monads just adds those new operations to the sequence. Most often, we'll "call" other monads from our ```main``` monad to run our full program.
 
-So why did I devote a whole section to these guys if they're so simple? Much of what we're going to do in Haskell will build off the concept here. Most code you'll write will be some form of monad.
-
-One final note for those curious: we *could* in fact do what monads do without them. It'd just be a lot more difficult.
+As we learn more, we'll see that waht we've learned here are just basic monads. There are many different types with many different functionalities. But hopefully, they at least make some sense, because that's all we need to start writing our own program!
 
 # Making a Full Haskell Program 
 
