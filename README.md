@@ -397,7 +397,7 @@ do
   guard (x `mod` 2 == 0)
   return x
 ```
-It's really just a sequence of operations, marked by the ```do``` keyword. Don't think of this as a isn't a sequence of instructions we're giving our computer. It's a *chain of operations*. The line-by-line aspect is just the order in which these operations are performed. Another, more complicated example would be:
+It's really just a sequence of operations, marked by the ```do``` keyword. This is still functional programming because it's a *chain of operations*, not a line-by-line telling to our computer of what to do. The line-by-line aspect here is just to specify the *order* in which these operations are performed. Another, more complicated example would be:
 
 ```
 -- The monad
@@ -417,7 +417,7 @@ Ignore the syntax we haven't covered yet. This piece of code **chains together**
 
 Most of our code in our program will be functional code (defining what *is*). Then, we'll actually *use* our code using monads (imperative-style code). When running a program in Haskell, the compiler will look for a monad as an entry point, by default called ```main```.
 
-Remember that we're still in a functional langauge, so a monad *must* return something. We can define what type of "something" it returns, but it must return something. By default, the ```main``` monad will need to return IO, meaning we must print something. Hopefully, you're starting to see the parallels between a monad in Haskell and a method in C/C++/Java; monads really are just a way of doing imperative code in Haskell.
+Remember that we're still in a functional langauge, so a monad *must* return something. We can define what *type* of "something" it returns, but it must return something. By default, the ```main``` monad will need to return IO, meaning we must print something. Hopefully, you're starting to see the parallels between a monad in Haskell and a method in C/C++/Java; monads really are just a way of doing imperative code in Haskell.
 
 ## The Hidden Power of Monads
 
