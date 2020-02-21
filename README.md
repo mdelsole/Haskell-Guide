@@ -527,9 +527,9 @@ Next, we'll want to actually read the contents of the file. We can do so with th
 contents <- readFile fileName
 ```
 
-Now that we've got the contents, we're probably going to want to do something with those contents. The best way to do this will to be to write another module that can handle the interpreting of those contents.
+Now that we've got the contents, we're probably going to want to do something with those contents. So, before finishing the Main.hs, we'll have to write the interpret module
 
-## Incorporating other files and the Interpret module
+## The Interpret module
 
 Most programs, including the one we're building here, will be complicated enough to split across different files. Fortunately, incorporating other files is easy. 
 
