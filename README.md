@@ -542,4 +542,4 @@ import Interpret
 In our ```Interpret.hs```, we'll set it up similarly to how our ```Main.hs``` is set up.
 
 
-...**Unfinished**, for now. I've uploaded the finished product (with comments!) to this repo though.
+...**unfinished**, for now. I've uploaded the finished product (with comments!) to this repo though.
